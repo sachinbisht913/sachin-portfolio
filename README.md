@@ -1,36 +1,193 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Sachin Bisht — Portfolio
 
-## Getting Started
+A modern, responsive developer portfolio built with Next.js, React, TypeScript, Tailwind CSS, and Motion.
 
-First, run the development server:
+The portfolio showcases my education, technical skills, projects, certifications, and contact information with a focus on smooth animations and an interactive user experience.
 
-```bash
+## 🌐 Live Portfolio
+
+[![Live Portfolio](https://img.shields.io/badge/Live%20Portfolio-Visit%20Website-8b5cf6?style=for-the-badge)](https://sachin-portfolio-opal-delta.vercel.app)
+
+✨ Features
+
+Responsive design for desktop, tablet, and mobile
+
+Modern dark-themed UI
+
+Smooth scroll-based animations
+
+Animated Hero, About, Skills, Education, and Projects sections
+
+Interactive project cards with project previews
+
+Technology icons for skills
+
+Education timeline
+
+Certification section with certificate links
+
+AWS certification modal
+
+GitHub and LinkedIn links
+
+Resume access
+
+Mobile-friendly navigation
+
+🛠️ Tech Stack
+
+Frontend
+
+Next.js
+
+React
+
+TypeScript
+
+Tailwind CSS
+
+Motion
+
+Lucide React
+
+Programming Languages
+
+Java
+
+JavaScript
+
+Python
+
+SQL
+
+Backend
+
+Node.js
+
+Express.js
+
+Flask
+
+Databases
+
+MongoDB
+
+MySQL
+
+AI / Machine Learning
+
+Python
+
+Pandas
+
+NumPy
+
+Scikit-learn
+
+Tools
+
+Git
+
+GitHub
+
+VS Code
+
+Postman
+
+📂 Project Structure
+
+portfolio/
+├── app/
+├── components/
+├── public/
+│   ├── projects/
+│   ├── icons/
+│   ├── certificates/
+│   └── resume.pdf
+├── package.json
+├── next.config.ts
+├── tsconfig.json
+└── README.md
+
+💻 Getting Started
+
+Clone the repository:
+
+git clone https://github.com/YOUR_USERNAME/sachin-portfolio.git
+cd sachin-portfolio
+
+Install dependencies:
+
+npm install
+
+Run the development server:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+🏗️ Production Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create an optimized production build:
 
-## Learn More
+npm run build
 
-To learn more about Next.js, take a look at the following resources:
+Start the production server:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+npm start
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+📌 Featured Projects
 
-## Deploy on Vercel
+AI Interview Platform
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+An AI-powered interview practice platform designed to help users prepare for technical interviews through interactive sessions and automated feedback.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Tech: Next.js, React, TypeScript, Node.js, AI, MongoDB
+
+Path Finder Visualizer
+
+An interactive visualization project for learning and exploring pathfinding and graph algorithms.
+
+Tech: HTML, CSS, JavaScript, DSA
+
+Network Intrusion Detection System
+
+A machine-learning based cybersecurity project for detecting and classifying network intrusions using the NSL-KDD dataset.
+
+Tech: Python, Flask, Pandas, NumPy, Scikit-learn
+
+Learning Management System
+
+A web-based learning management system with course management, student dashboards, assignments, quizzes, and learning materials.
+
+Tech: HTML, CSS, JavaScript, PHP, MySQL
+
+🎓 Education
+
+Master of Computer Applications (MCA) — Graphic Era Deemed to be University, Dehradun
+
+Bachelor of Computer Applications (BCA) — SSJ University
+
+📜 Certifications
+
+Research Methodology — IIT Madras
+
+Full Stack Web Development — SmartED
+
+AWS certifications and learning programs
+
+📱 Responsive Design
+
+The portfolio is designed to work across desktop, laptop, tablet, and mobile devices.
+
+📬 Contact
+
+You can connect with me through the contact section of the portfolio.
+
+GitHub: YOUR_GITHUB_URL
+
+LinkedIn: YOUR_LINKEDIN_URL
+
+📄 License
+
+This portfolio is for personal and professional showcase purposes.
