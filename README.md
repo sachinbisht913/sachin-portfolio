@@ -6,7 +6,8 @@ The portfolio showcases my education, technical skills, projects, certifications
 
 ## 🌐 Live Portfolio
 
-[![Live Portfolio](https://img.shields.io/badge/Live%20Portfolio-Visit%20Website-8b5cf6?style=for-the-badge)](https://sachin-portfolio-opal-delta.vercel.app)
+
+👉 [**Visit My Live Portfolio**](https://sachin-portfolio-opal-delta.vercel.app)
 
 ✨ Features
 
