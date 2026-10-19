@@ -1,12 +1,19 @@
+
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+} from "motion/react";
 import {
   GraduationCap,
   Award,
   ExternalLink,
   X,
+  ArrowUpRight,
+  Cloud,
 } from "lucide-react";
 
 const education = [
@@ -16,7 +23,7 @@ const education = [
     location: "Dehradun",
     period: "2024 – 2026",
     description:
-      "Focused on software development, data structures, databases, machine learning, networking, and modern web technologies.",
+      "Studied software development, data structures, databases, machine learning, networking, and modern web technologies.",
   },
   {
     degree: "Bachelor of Computer Applications",
@@ -24,7 +31,7 @@ const education = [
     location: "",
     period: "2021 – 2023",
     description:
-      "Built a strong foundation in programming, computer science fundamentals, databases, web development, and software engineering.",
+      "Built a foundation in programming, computer science fundamentals, databases, and web development.",
   },
 ];
 
@@ -46,6 +53,7 @@ const certifications = [
 const awsCertificates = [
   {
     title: "AWS Job Roles",
+    issuer: "AWS",
     type: "Certification",
     url: "/certificates/aws-job-role.pdf",
   },
@@ -87,570 +95,412 @@ const awsCertificates = [
   },
 ];
 
-/* =========================================================
-   ANIMATION VARIANTS
-========================================================= */
-
-const fadeUp = {
-  hidden: {
-    opacity: 0,
-    y: 45,
-  },
-
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.65,
-      ease: "easeOut" as const,
-    },
-  },
-};
-
-const educationCard = {
-  hidden: {
-    opacity: 0,
-    x: -45,
-    scale: 0.97,
-  },
-
-  visible: {
-    opacity: 1,
-    x: 0,
-    scale: 1,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut" as const,
-    },
-  },
-};
-
-const certificationCard = {
-  hidden: {
-    opacity: 0,
-    x: 45,
-    scale: 0.97,
-  },
-
-  visible: {
-    opacity: 1,
-    x: 0,
-    scale: 1,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut" as const,
-    },
-  },
-};
-
 export default function Education() {
   const [isAwsModalOpen, setIsAwsModalOpen] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+
+  const reveal = {
+    hidden: {
+      opacity: 0,
+      y: shouldReduceMotion ? 0 : 22,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: shouldReduceMotion ? 0 : 0.55,
+        ease: "easeOut" as const,
+      },
+    },
+  };
+
+  const stagger = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.12,
+      },
+    },
+  };
 
   return (
     <section
       id="education"
-      className="education-scroll relative overflow-hidden border-t border-white/10 px-6 py-10 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto lg:scroll-smooth"
+      className="relative overflow-hidden border-t border-stone-200 bg-[#DAD9D5] px-5 py-20 text-[#252525] sm:px-8 sm:py-24 lg:py-28"
     >
-      {/* =====================================================
-          BACKGROUND GLOW
-      ====================================================== */}
-
-      <motion.div
-        animate={{
-          x: [0, 40, 0],
-          opacity: [0.04, 0.08, 0.04],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute -right-40 top-1/3 -z-10 h-96 w-96 rounded-full bg-violet-600 blur-[140px]"
+      {/* Soft background accents */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-28 top-24 h-72 w-72 rounded-full bg-amber-100/40 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-28 bottom-20 h-72 w-72 rounded-full bg-violet-100/40 blur-3xl"
       />
 
-      <div className="mx-auto max-w-6xl">
-
-        {/* =====================================================
-            HEADING
-        ====================================================== */}
-
+      <div className="relative mx-auto max-w-6xl">
+        {/* Section heading */}
         <motion.div
-          variants={fadeUp}
+          variants={stagger}
           initial="hidden"
           whileInView="visible"
-          viewport={{
-            once: false,
-            amount: 0.25,
-          }}
-          className="mb-12"
+          viewport={{ once: true, amount: 0.2 }}
         >
-          <div className="mb-4 flex items-center gap-3">
-            <span className="h-px w-8 bg-violet-500" />
+          <motion.p
+            variants={reveal}
+            className="mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-stone-500"
+          >
+            <span className="h-px w-8 bg-stone-400" />
+            Education &amp; certifications
+          </motion.p>
 
-            <p className="text-sm font-medium uppercase tracking-[0.25em] text-violet-400">
-              Education & Certifications
+          <motion.div variants={reveal}>
+            <h2 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl md:text-6xl">
+              What I&apos;ve learned
+              <br />
+              <span className="text-stone-400">along the way.</span>
+            </h2>
+
+            <p className="mt-6 max-w-2xl text-base leading-8 text-stone-600 sm:text-lg">
+              My academic background and additional learning that have helped
+              me build a foundation in software development.
             </p>
-          </div>
-
-          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            My learning journey.
-          </h2>
-
-          <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-500 sm:text-lg">
-            My academic background and certifications that have helped
-            me build a strong foundation in software development.
-          </p>
+          </motion.div>
         </motion.div>
 
-
-        {/* =====================================================
-            MAIN CONTENT
-        ====================================================== */}
-
-        <div className="grid gap-16 lg:grid-cols-2">
-
-
-          {/* =================================================
-              EDUCATION
-          ================================================= */}
-
+        {/* Main content */}
+        <div className="mt-12 grid gap-12 lg:mt-14 lg:grid-cols-2 lg:gap-14">
+          {/* Education */}
           <div>
-
-            {/* Education heading */}
-
             <motion.div
-              variants={fadeUp}
+              variants={reveal}
               initial="hidden"
               whileInView="visible"
-              viewport={{
-                once: false,
-                amount: 0.25,
-              }}
-              transition={{
-                delay: 0.05,
-              }}
-              className="mb-8 flex items-center gap-3"
+              viewport={{ once: true, amount: 0.2 }}
+              className="mb-7 flex items-center gap-3"
             >
-              <motion.div
-                whileHover={{
-                  rotate: 8,
-                  scale: 1.1,
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                }}
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-violet-500/20 bg-violet-500/10 text-violet-400"
-              >
-                <GraduationCap size={20} />
-              </motion.div>
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-amber-200 bg-amber-100 text-amber-800">
+                <GraduationCap size={21} strokeWidth={1.7} />
+              </div>
 
-              <h3 className="text-xl font-semibold text-white">
-                Education
-              </h3>
+              <div>
+                <h3 className="text-xl font-semibold">Education</h3>
+                <p className="mt-0.5 text-xs text-stone-500">
+                  Academic journey
+                </p>
+              </div>
             </motion.div>
-
 
             {/* Education timeline */}
-
             <div className="relative space-y-5">
-
-              {/* Timeline */}
-
-              <div className="absolute bottom-8 left-5 top-8 w-px bg-gradient-to-b from-violet-500/50 via-white/10 to-transparent" />
-
+              <div className="absolute bottom-8 left-[5px] top-8 w-px bg-amber-200" />
 
               {education.map((item, index) => (
-
-                <motion.div
+                <motion.article
                   key={item.degree}
-
-                  variants={educationCard}
-
-                  initial="hidden"
-
-                  whileInView="visible"
-
-                  viewport={{
-                    once: false,
-                    amount: 0.2,
+                  initial={{
+                    opacity: 0,
+                    x: shouldReduceMotion ? 0 : -18,
                   }}
-
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
                   transition={{
-                    delay: index * 0.15,
+                    duration: shouldReduceMotion ? 0 : 0.5,
+                    delay: shouldReduceMotion ? 0 : index * 0.12,
+                    ease: "easeOut",
                   }}
-
-                  whileHover={{
-                    x: 6,
-                  }}
-
-                  className="group relative pl-14"
+                  whileHover={
+                    shouldReduceMotion
+                      ? undefined
+                      : { x: 3, transition: { duration: 0.2 } }
+                  }
+                  className="relative pl-8"
                 >
+                  <span className="absolute left-0 top-7 z-10 h-[11px] w-[11px] rounded-full border-2 border-[#faf9f6] bg-amber-500 ring-1 ring-amber-200" />
 
-                  {/* Timeline dot */}
-
-                  <motion.div
-                    whileHover={{
-                      scale: 1.3,
-                    }}
-                    className="absolute left-[11px] top-6 z-10 h-3 w-3 rounded-full border-2 border-black bg-violet-500"
-                  />
-
-
-                  {/* Education card */}
-
-                  <div
-                    className="
-                      rounded-2xl
-                      border
-                      border-white/10
-                      bg-gradient-to-br
-                      from-[#111827]
-                      via-[#0F172A]
-                      to-[#1E1633]
-                      p-6
-                      transition-all
-                      duration-500
-                      group-hover:border-violet-500/30
-                      group-hover:bg-white/[0.05]
-                    "
-                  >
-
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-
-                      <div>
-
-                        <h4 className="text-lg font-semibold text-white">
-                          {item.degree}
-                        </h4>
-
-                        <p className="mt-1 text-sm text-violet-400">
-                          {item.institution}
-                          {item.location && ` • ${item.location}`}
-                        </p>
-
-                      </div>
-
-
-                      {/* Period */}
-
-                      <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs text-zinc-500">
-                        {item.period}
-                      </span>
-
-                    </div>
-
-
-                    <p className="mt-4 text-sm leading-7 text-zinc-500">
-                      {item.description}
-                    </p>
-
-
-                    {/* Bottom accent */}
-
-                    <motion.div
-                      initial={{
-                        width: 0,
-                      }}
-                      whileInView={{
-                        width: "30%",
-                      }}
-                      viewport={{
-                        once: false,
-                        amount: 0.2,
-                      }}
-                      transition={{
-                        duration: 0.7,
-                        delay: index * 0.15 + 0.2,
-                      }}
-                      className="mt-5 h-px bg-violet-500/50"
+                  <div className="group relative overflow-hidden rounded-2xl border border-amber-200 bg-amber-50/70 p-6 transition-all duration-300 hover:border-amber-300 hover:shadow-md hover:shadow-amber-900/[0.04] sm:p-7">
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -right-8 -top-10 h-28 w-28 rounded-full bg-amber-100/70 transition-transform duration-500 group-hover:scale-125"
                     />
 
-                  </div>
+                    <div className="relative">
+                      <div className="flex flex-wrap items-start justify-between gap-3">
+                        <div>
+                          <h4 className="text-lg font-semibold leading-snug tracking-tight">
+                            {item.degree}
+                          </h4>
 
-                </motion.div>
+                          <p className="mt-2 text-sm leading-6 text-stone-600">
+                            {item.institution}
+                            {item.location && ` · ${item.location}`}
+                          </p>
+                        </div>
 
-              ))}
-
-            </div>
-
-          </div>
-
-
-          {/* =================================================
-              CERTIFICATIONS
-          ================================================= */}
-
-          <div>
-
-            {/* Certifications heading */}
-
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{
-                once: false,
-                amount: 0.25,
-              }}
-              transition={{
-                delay: 0.1,
-              }}
-              className="mb-8 flex items-center gap-3"
-            >
-
-              <motion.div
-                whileHover={{
-                  rotate: -8,
-                  scale: 1.1,
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                }}
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-violet-500/20 bg-violet-500/10 text-violet-400"
-              >
-                <Award size={20} />
-              </motion.div>
-
-              <h3 className="text-xl font-semibold text-white">
-                Certifications
-              </h3>
-
-            </motion.div>
-
-
-            {/* Certification cards */}
-
-            <div className="space-y-4">
-
-              {certifications.map((certificate, index) => (
-
-                <motion.div
-                  key={certificate.title}
-
-                  variants={certificationCard}
-
-                  initial="hidden"
-
-                  whileInView="visible"
-
-                  viewport={{
-                    once: false,
-                    amount: 0.2,
-                  }}
-
-                  transition={{
-                    delay: index * 0.12,
-                  }}
-
-                  whileHover={{
-                    y: -6,
-                    scale: 1.01,
-                  }}
-
-                  className="
-                    group
-                    relative
-                    overflow-hidden
-                    rounded-2xl
-                    border
-                    border-white/10
-                    bg-gradient-to-br
-                    from-[#111827]
-                    via-[#0F172A]
-                    to-[#1E1633]
-                    p-6
-                    transition-all
-                    duration-500
-                    hover:border-violet-500/30
-                  "
-                >
-
-                  {/* Hover glow */}
-
-                  <div
-                    className="
-                      pointer-events-none
-                      absolute
-                      -right-16
-                      -top-16
-                      h-32
-                      w-32
-                      rounded-full
-                      bg-violet-600/0
-                      blur-3xl
-                      transition-all
-                      duration-500
-                      group-hover:bg-violet-600/20
-                    "
-                  />
-
-
-                  <div className="relative flex items-start justify-between gap-5">
-
-                    <div className="flex gap-4">
-
-                      {/* Certificate icon */}
-
-                      <motion.div
-                        whileHover={{
-                          scale: 1.12,
-                          rotate: 5,
-                        }}
-                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-violet-500/10 text-violet-400"
-                      >
-                        <Award size={20} />
-                      </motion.div>
-
-
-                      <div>
-
-                        <p className="text-xs uppercase tracking-wider text-zinc-600">
-                          {certificate.type}
-                        </p>
-
-                        <h4 className="mt-1 font-semibold text-white">
-                          {certificate.title}
-                        </h4>
-
-                        <p className="mt-1 text-sm text-zinc-500">
-                          {certificate.issuer}
-                        </p>
-
+                        <span className="shrink-0 rounded-lg border border-amber-200 bg-white/80 px-3 py-1.5 text-xs font-medium text-amber-800">
+                          {item.period}
+                        </span>
                       </div>
 
+                      <div className="my-5 h-px bg-amber-200/80" />
+
+                      <p className="text-sm leading-7 text-stone-600">
+                        {item.description}
+                      </p>
                     </div>
-
-
-                    {/* External link */}
-
-                    <motion.a
-                      href={certificate.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{
-                        scale: 1.1,
-                        rotate: 5,
-                      }}
-                      whileTap={{
-                        scale: 0.9,
-                      }}
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 text-zinc-500 transition-all hover:border-violet-500/30 hover:bg-violet-500/10 hover:text-white"
-                      aria-label={`View ${certificate.title}`}
-                    >
-                      <ExternalLink size={15} />
-                    </motion.a>
-
                   </div>
-
-
-                  {/* Bottom accent */}
-
-                  <motion.div
-                    initial={{
-                      width: 0,
-                    }}
-                    whileInView={{
-                      width: "25%",
-                    }}
-                    viewport={{
-                      once: false,
-                      amount: 0.2,
-                    }}
-                    transition={{
-                      duration: 0.7,
-                      delay: index * 0.12 + 0.2,
-                    }}
-                    className="mt-6 h-px bg-violet-500/50"
-                  />
-
-                </motion.div>
-
+                </motion.article>
               ))}
-
-              <motion.button
-                type="button"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.55, delay: 0.2 }}
-                whileHover={{ y: -6, scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-                onClick={() => setIsAwsModalOpen(true)}
-                className="group relative w-full overflow-hidden rounded-2xl border border-violet-500/25 bg-gradient-to-br from-violet-500/15 via-[#0F172A] to-[#1E1633] p-6 text-left transition-all duration-500 hover:border-violet-400/60"
-              >
-                <div className="pointer-events-none absolute -right-16 -top-16 h-32 w-32 rounded-full bg-violet-500/10 blur-3xl transition-all duration-500 group-hover:bg-violet-500/25" />
-                <div className="relative flex items-start justify-between gap-5">
-                  <div className="flex gap-4">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-violet-500/15 text-violet-300">
-                      <Award size={20} />
-                    </div>
-                    <div>
-                      <p className="text-xs uppercase tracking-wider text-violet-300">AWS</p>
-                      <h4 className="mt-1 font-semibold text-white">AWS Certifications</h4>
-                      <p className="mt-1 text-sm text-zinc-400">View {awsCertificates.length} AWS credentials</p>
-                    </div>
-                  </div>
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 text-zinc-400 transition-all group-hover:border-violet-400/50 group-hover:bg-violet-500/10 group-hover:text-white">
-                    <ExternalLink size={15} />
-                  </span>
-                </div>
-                <div className="mt-6 h-px w-1/4 bg-violet-400/60" />
-              </motion.button>
-
             </div>
 
+            {/* Education footer */}
+            <motion.div
+              variants={reveal}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="mt-5 flex items-start gap-3 rounded-xl border border-amber-200/70 bg-white/70 p-4"
+            >
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-800">
+                <GraduationCap size={18} />
+              </div>
+              <p className="text-sm leading-6 text-stone-600">
+                Building on my academic foundation through practical projects
+                and continuous learning.
+              </p>
+            </motion.div>
           </div>
 
+          {/* Certifications */}
+          <div>
+            <motion.div
+              variants={reveal}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              className="mb-7 flex items-center gap-3"
+            >
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-blue-200 bg-blue-100 text-blue-800">
+                <Award size={21} strokeWidth={1.7} />
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold">Certifications</h3>
+                <p className="mt-0.5 text-xs text-stone-500">
+                  Courses &amp; credentials
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.12 }}
+              className="space-y-3"
+            >
+              {certifications.map((certificate) => (
+                <motion.a
+                  key={certificate.title}
+                  variants={reveal}
+                  href={certificate.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={
+                    shouldReduceMotion
+                      ? undefined
+                      : { x: 3, transition: { duration: 0.2 } }
+                  }
+                  className="group flex items-center justify-between gap-4 rounded-xl border border-blue-200 bg-blue-50/60 p-5 transition-all duration-200 hover:border-blue-300 hover:bg-blue-50 hover:shadow-sm"
+                >
+                  <div className="flex min-w-0 items-start gap-4">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-700 transition-colors group-hover:bg-blue-200">
+                      <Award size={19} />
+                    </div>
+
+                    <div className="min-w-0">
+                      <p className="text-[11px] font-medium uppercase tracking-wider text-blue-700/80">
+                        {certificate.type}
+                      </p>
+
+                      <h4 className="mt-1 font-semibold leading-6">
+                        {certificate.title}
+                      </h4>
+
+                      <p className="mt-1 text-sm text-stone-500">
+                        {certificate.issuer}
+                      </p>
+                    </div>
+                  </div>
+
+                  <ExternalLink
+                    size={17}
+                    className="shrink-0 text-blue-400 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue-700"
+                  />
+                </motion.a>
+              ))}
+
+              {/* AWS credentials button */}
+              <motion.button
+                variants={reveal}
+                type="button"
+                onClick={() => setIsAwsModalOpen(true)}
+                whileHover={
+                  shouldReduceMotion
+                    ? undefined
+                    : { y: -3, transition: { duration: 0.2 } }
+                }
+                whileTap={
+                  shouldReduceMotion ? undefined : { scale: 0.99 }
+                }
+                className="group relative flex w-full items-center justify-between gap-4 overflow-hidden rounded-xl border border-violet-200 bg-violet-50/80 p-5 text-left transition-all duration-300 hover:border-violet-300 hover:bg-violet-50 hover:shadow-md hover:shadow-violet-900/[0.04]"
+              >
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -right-6 -top-10 h-28 w-28 rounded-full bg-violet-100/80 transition-transform duration-500 group-hover:scale-125"
+                />
+
+                <div className="relative flex min-w-0 items-start gap-4">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-100 text-violet-700 transition-colors group-hover:bg-violet-200">
+                    <Cloud size={19} />
+                  </div>
+
+                  <div className="min-w-0">
+                    <p className="text-[11px] font-medium uppercase tracking-wider text-violet-700/80">
+                      AWS · Skill Builder
+                    </p>
+
+                    <h4 className="mt-1 font-semibold leading-6">
+                      AWS learning &amp; certifications
+                    </h4>
+
+                    <p className="mt-1 text-sm text-stone-600">
+                      View {awsCertificates.length} credentials
+                    </p>
+                  </div>
+                </div>
+
+                <ArrowUpRight
+                  size={19}
+                  className="relative shrink-0 text-violet-500 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </motion.button>
+            </motion.div>
+          </div>
         </div>
-
-     
-
       </div>
 
+      {/* AWS certificates modal */}
       <AnimatePresence>
         {isAwsModalOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{
+              duration: shouldReduceMotion ? 0 : 0.2,
+            }}
             onClick={() => setIsAwsModalOpen(false)}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/75 px-4 py-6 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-stone-950/40 px-4 py-6 backdrop-blur-sm"
           >
             <motion.div
               role="dialog"
               aria-modal="true"
               aria-labelledby="aws-certifications-title"
-              initial={{ opacity: 0, y: 24, scale: 0.97 }}
+              initial={{
+                opacity: 0,
+                y: shouldReduceMotion ? 0 : 18,
+                scale: shouldReduceMotion ? 1 : 0.98,
+              }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 24, scale: 0.97 }}
-              transition={{ duration: 0.2 }}
+              exit={{
+                opacity: 0,
+                y: shouldReduceMotion ? 0 : 12,
+                scale: shouldReduceMotion ? 1 : 0.98,
+              }}
+              transition={{
+                duration: shouldReduceMotion ? 0 : 0.2,
+              }}
               onClick={(event) => event.stopPropagation()}
-              className="max-h-full w-full max-w-2xl overflow-y-auto rounded-3xl border border-white/10 bg-[#0B1120] p-6 shadow-2xl shadow-black/50 sm:p-8"
+              className="max-h-full w-full max-w-2xl overflow-y-auto rounded-2xl border border-violet-200 bg-[#faf9f6] p-5 shadow-2xl sm:p-8"
             >
               <div className="flex items-start justify-between gap-5">
                 <div>
-                  <p className="text-sm font-medium uppercase tracking-[0.2em] text-violet-400">AWS</p>
-                  <h3 id="aws-certifications-title" className="mt-2 text-2xl font-bold text-white sm:text-3xl">AWS certifications</h3>
-                  <p className="mt-3 text-sm leading-6 text-zinc-400">Choose a credential to open its certificate in a new tab.</p>
+                  <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-violet-700">
+                    <Cloud size={15} />
+                    AWS Skill Builder
+                  </div>
+
+                  <h3
+                    id="aws-certifications-title"
+                    className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl"
+                  >
+                    AWS certificates
+                  </h3>
+
+                  <p className="mt-3 text-sm leading-6 text-stone-600">
+                    Select a credential to open its PDF.
+                  </p>
                 </div>
-                <button type="button" onClick={() => setIsAwsModalOpen(false)} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 text-zinc-400 transition-colors hover:border-violet-400/50 hover:bg-violet-500/10 hover:text-white" aria-label="Close AWS certifications">
+
+                <button
+                  type="button"
+                  onClick={() => setIsAwsModalOpen(false)}
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-stone-200 bg-white text-stone-600 transition-colors hover:border-violet-200 hover:bg-violet-50 hover:text-violet-800"
+                  aria-label="Close AWS certifications"
+                >
                   <X size={19} />
                 </button>
               </div>
 
               <div className="mt-7 space-y-3">
-                {awsCertificates.map((certificate) => (
-                  <a key={certificate.title} href={certificate.url} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all hover:border-violet-400/40 hover:bg-violet-500/10">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-500/10 text-violet-400"><Award size={18} /></div>
-                      <p className="text-sm font-medium text-zinc-200 transition-colors group-hover:text-white">{certificate.title}</p>
+                {awsCertificates.map((certificate, index) => (
+                  <motion.a
+                    key={certificate.title}
+                    initial={{
+                      opacity: 0,
+                      y: shouldReduceMotion ? 0 : 8,
+                    }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: shouldReduceMotion ? 0 : 0.25,
+                      delay: shouldReduceMotion
+                        ? 0
+                        : Math.min(index * 0.04, 0.2),
+                    }}
+                    href={certificate.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between gap-4 rounded-xl border border-violet-100 bg-white p-4 transition-colors hover:border-violet-300 hover:bg-violet-50/60"
+                  >
+                    <div className="flex min-w-0 items-center gap-3">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-100 text-violet-700">
+                        <Award size={18} />
+                      </div>
+
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium leading-6">
+                          {certificate.title}
+                        </p>
+
+                        <p className="mt-1 text-xs text-stone-500">
+                          {certificate.issuer} · {certificate.type}
+                        </p>
+                      </div>
                     </div>
-                    <ExternalLink size={17} className="shrink-0 text-zinc-500 transition-colors group-hover:text-violet-300" />
-                  </a>
+
+                    <ExternalLink
+                      size={17}
+                      className="shrink-0 text-violet-400 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-violet-700"
+                    />
+                  </motion.a>
                 ))}
               </div>
+
+              <p className="mt-5 text-xs leading-5 text-stone-500">
+                Make sure each certificate PDF exists in your public
+                certificates folder.
+              </p>
             </motion.div>
           </motion.div>
         )}

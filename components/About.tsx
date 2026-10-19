@@ -1,424 +1,328 @@
+
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import {
-  Code2,
   GraduationCap,
+  Code2,
   Rocket,
   ArrowUpRight,
-  Sparkles,
-  Terminal,
+  BookOpen,
+  BriefcaseBusiness,
 } from "lucide-react";
 
 const highlights = [
   {
     icon: GraduationCap,
-    title: "MCA Graduate",
+    number: "01",
+    title: "My background",
     description:
-      "Master of Computer Applications with a strong foundation in computer science and software development.",
-    accent: "violet",
+      "I completed my MCA in 2026 and have been building my skills in software development through hands-on projects.",
+    accent: "text-amber-700",
+    iconBg: "bg-amber-100",
+    cardBg: "bg-amber-50/70",
+    border: "border-amber-200",
+    line: "bg-amber-400",
   },
   {
     icon: Code2,
-    title: "Full Stack Development",
+    number: "02",
+    title: "What I work with",
     description:
-      "Building responsive and practical web applications using modern frontend and backend technologies.",
-    accent: "blue",
+      "I work with React, Next.js, Node.js, and databases to build web applications, from the user interface to the backend.",
+    accent: "text-sky-700",
+    iconBg: "bg-sky-100",
+    cardBg: "bg-sky-50/70",
+    border: "border-sky-200",
+    line: "bg-sky-400",
   },
   {
     icon: Rocket,
-    title: "Problem Solver",
+    number: "03",
+    title: "What I'm working towards",
     description:
-      "Interested in DSA, AI/ML, and creating useful solutions to real-world problems.",
-    accent: "cyan",
+      "I'm improving my problem-solving skills, practising DSA, and building projects that help me prepare for software development roles.",
+    accent: "text-emerald-700",
+    iconBg: "bg-emerald-100",
+    cardBg: "bg-emerald-50/70",
+    border: "border-emerald-200",
+    line: "bg-emerald-400",
   },
 ];
 
 const stats = [
   {
     value: "MCA",
-    label: "Graduate",
+    label: "Education",
+    icon: GraduationCap,
+    accent: "text-amber-700",
+    iconBg: "bg-amber-100",
   },
   {
     value: "4+",
-    label: "Major Projects",
+    label: "Major projects",
+    icon: BriefcaseBusiness,
+    accent: "text-sky-700",
+    iconBg: "bg-sky-100",
   },
   {
     value: "10+",
-    label: "Technologies",
+    label: "Technologies explored",
+    icon: BookOpen,
+    accent: "text-violet-700",
+    iconBg: "bg-violet-100",
   },
 ];
 
 export default function About() {
+  const shouldReduceMotion = useReducedMotion();
+
+  const fadeUp = {
+    hidden: {
+      opacity: 0,
+      y: shouldReduceMotion ? 0 : 24,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: shouldReduceMotion ? 0 : 0.6,
+        ease: "easeOut" as const,
+      },
+    },
+  };
+
+  const stagger = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.12,
+      },
+    },
+  };
+
   return (
     <section
       id="about"
-      className="relative overflow-hidden border-t border-white/10 px-6 py-28 sm:py-32"
+      className="relative overflow-hidden border-t border-stone-200 bg-[#EAE9E5] px-5 py-20 text-[#252525] sm:px-8 sm:py-24 lg:py-28"
     >
-      {/* =====================================================
-          BACKGROUND
-      ====================================================== */}
-
-      <motion.div
-        animate={{
-          scale: [1, 1.12, 1],
-          opacity: [0.04, 0.09, 0.04],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute -left-52 top-20 -z-10 h-[500px] w-[500px] rounded-full bg-violet-600 blur-[150px]"
+      {/* Soft background accents */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-24 top-24 h-72 w-72 rounded-full bg-amber-100/40 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-24 bottom-20 h-72 w-72 rounded-full bg-sky-100/40 blur-3xl"
       />
 
-      <motion.div
-        animate={{
-          x: [0, -40, 0],
-          opacity: [0.02, 0.06, 0.02],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute -right-52 bottom-0 -z-10 h-[450px] w-[450px] rounded-full bg-blue-600 blur-[160px]"
-      />
-
-      {/* Subtle grid */}
-      <div className="pointer-events-none absolute inset-0 -z-20 bg-[linear-gradient(to_right,#ffffff04_1px,transparent_1px),linear-gradient(to_bottom,#ffffff04_1px,transparent_1px)] bg-[size:80px_80px] [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]" />
-
-      <div className="mx-auto max-w-7xl">
-
-        {/* =====================================================
-            HEADING
-        ====================================================== */}
-
+      <div className="relative mx-auto max-w-6xl">
+        {/* Section heading */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 40,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: false,
-            amount: 0.25,
-          }}
-          transition={{
-            duration: 0.7,
-            ease: "easeOut",
-          }}
-          className="mb-16"
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
         >
-          <div className="mb-5 flex items-center gap-3">
-            <span className="h-px w-10 bg-violet-500" />
-
-            <p className="text-xs font-medium uppercase tracking-[0.35em] text-violet-400">
-              About Me
-            </p>
-          </div>
-
-          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-            <div>
-              <h2 className="text-4xl font-bold tracking-[-0.03em] text-white sm:text-5xl lg:text-6xl">
-                More than just{" "}  code.
-                {/* <span className="bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent">
-                 
-                </span> */}
-              </h2>
-
-              <p className="mt-6 max-w-2xl text-base leading-8 text-zinc-500 sm:text-lg">
-                I enjoy turning ideas into useful digital experiences
-                and continuously improving my skills along the way.
-              </p>
-            </div>
-
-          
-          </div>
-        </motion.div>
-
-        {/* =====================================================
-            MAIN CONTENT
-        ====================================================== */}
-
-        <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-
-          {/* =================================================
-              LEFT SIDE
-          ================================================= */}
+          <motion.p
+            variants={fadeUp}
+            className="mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-stone-500"
+          >
+            <span className="h-px w-8 bg-stone-400" />
+            A little about me
+          </motion.p>
 
           <motion.div
-            initial={{
-              opacity: 0,
-              x: -45,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: false,
-              amount: 0.2,
-            }}
-            transition={{
-              duration: 0.75,
-              ease: "easeOut",
-            }}
+            variants={fadeUp}
+            className="grid gap-6 md:grid-cols-[1fr_0.7fr] md:items-end"
           >
-            {/* Intro card */}
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.025] p-7 backdrop-blur-sm sm:p-8">
+            <h2 className="max-w-2xl text-4xl font-semibold leading-tight tracking-tight sm:text-5xl md:text-6xl">
+              The person behind
+              <span className="text-emerald-700"> the code.</span>
+            </h2>
 
-              {/* Glow */}
-              <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-violet-600/10 blur-[80px]" />
+            <p className="max-w-lg text-base leading-8 text-stone-600 md:justify-self-end">
+              I enjoy understanding how things work, building useful
+              applications, and learning by solving real development problems.
+            </p>
+          </motion.div>
+        </motion.div>
+
+        {/* Main content */}
+        <div className="mt-12 grid gap-6 lg:mt-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8">
+          {/* Introduction card */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+            className="flex flex-col"
+          >
+            <motion.div
+              variants={fadeUp}
+              whileHover={
+                shouldReduceMotion
+                  ? undefined
+                  : { y: -3, transition: { duration: 0.2 } }
+              }
+              className="relative flex-1 overflow-hidden rounded-2xl border border-amber-200 bg-white p-6 shadow-sm shadow-stone-900/[0.025] sm:p-8"
+            >
+              {/* Decorative accent */}
+              <div
+                aria-hidden="true"
+                className="absolute right-0 top-0 h-28 w-28 rounded-bl-[80px] bg-amber-50"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute right-7 top-7 h-10 w-10 rounded-xl bg-amber-100/80"
+              />
 
               <div className="relative">
-
-                {/* Terminal label */}
-                <div className="mb-7 flex items-center gap-3">
-                
-
-                  <div>
-                    <p className="font-mono text-xs text-zinc-600">
-                      About
-                    </p>
-
-                    <p className="text-xs text-zinc-700">
-                      Developer profile
-                    </p>
-                  </div>
+                <div className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-medium text-amber-800">
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+                  Hello, I'm Sachin
                 </div>
 
-                {/* Main introduction */}
-                <p className="text-lg leading-8 text-zinc-300 sm:text-xl">
-                  I'm{" "}
-                  <span className="font-semibold text-white">
-                    Sachin Bisht
-                  </span>
-                  , an MCA graduate and aspiring software developer
-                  who enjoys building web applications and exploring
-                  AI-powered technologies.
+                <h3 className="mt-6 text-2xl font-semibold leading-snug tracking-tight sm:text-3xl">
+                  MCA graduate.
+                  <br />
+                  Developer by practice.
+                </h3>
+
+                <div className="my-6 h-px bg-stone-200" />
+
+                <p className="text-sm leading-7 text-stone-600 sm:text-base">
+                  I've worked on projects involving full-stack development,
+                  AI-powered interview preparation, job application tracking,
+                  and machine learning. Building these projects has helped me
+                  understand how frontend, backend, and databases work together.
                 </p>
 
-                <div className="my-7 h-px w-full bg-white/5" />
-
-                <p className="text-sm leading-7 text-zinc-500 sm:text-base">
-                  I've worked on projects involving full-stack
-                  development, machine learning, data structures,
-                  and interactive web applications. I enjoy learning
-                  new technologies and turning ideas into functional
-                  products.
+                <p className="mt-4 text-sm leading-7 text-stone-600 sm:text-base">
+                  I'm currently focusing on improving my coding fundamentals,
+                  preparing for interviews, and becoming a better software
+                  developer.
                 </p>
 
-                <p className="mt-5 text-sm leading-7 text-zinc-500 sm:text-base">
-                  I'm currently focused on improving my problem-solving,
-                  development, and interview skills while looking for
-                  opportunities where I can grow as a software developer.
-                </p>
-
-                {/* Current focus */}
-                <motion.div
-                  whileHover={{
-                    y: -4,
-                  }}
-                  transition={{
-                    duration: 0.25,
-                  }}
-                  className="mt-8 overflow-hidden rounded-2xl border border-violet-500/20 bg-violet-500/[0.05]"
+                <motion.a
+                  href="#projects"
+                  whileHover={shouldReduceMotion ? undefined : { x: 4 }}
+                  whileTap={
+                    shouldReduceMotion ? undefined : { scale: 0.98 }
+                  }
+                  className="group mt-7 inline-flex items-center gap-2 text-sm font-semibold text-amber-800"
                 >
-                  <div className="flex items-start gap-4 p-5">
-
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-violet-500/20 bg-violet-500/10 text-violet-400">
-                      <Rocket size={18} />
-                    </div>
-
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <p className="text-sm font-semibold text-white">
-                          Currently focused on
-                        </p>
-
-                    
-                      </div>
-
-                      <p className="mt-2 text-xs leading-6 text-zinc-500 sm:text-sm">
-                        Full-stack development, DSA, AI applications,
-                        and preparing for software development roles.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Accent line */}
-                  <motion.div
-                    initial={{
-                      width: "0%",
-                    }}
-                    whileInView={{
-                      width: "100%",
-                    }}
-                    viewport={{
-                      once: false,
-                      amount: 0.3,
-                    }}
-                    transition={{
-                      duration: 1,
-                    }}
-                    className="h-px bg-gradient-to-r from-violet-500/70 via-purple-500/40 to-transparent"
+                  Take a look at my projects
+                  <ArrowUpRight
+                    size={16}
+                    className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                   />
-                </motion.div>
+                </motion.a>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Stats */}
-            <div className="mt-4 grid grid-cols-3 divide-x divide-white/10 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{
-                    opacity: 0,
-                    y: 20,
-                  }}
-                  whileInView={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  viewport={{
-                    once: false,
-                    amount: 0.3,
-                  }}
-                  transition={{
-                    duration: 0.5,
-                    delay: index * 0.1,
-                  }}
-                  className="px-3 text-center"
-                >
-                  <p className="text-lg font-bold text-white sm:text-xl">
-                    {stat.value}
-                  </p>
-
-                  <p className="mt-1 text-[10px] uppercase tracking-wider text-zinc-600 sm:text-xs">
-                    {stat.label}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Explore */}
-            <motion.a
-              href="#projects"
-              whileHover={{
-                x: 5,
-              }}
-              className="group mt-7 inline-flex items-center gap-2 text-sm font-medium text-zinc-400 transition-colors hover:text-white"
+            {/* Quick facts */}
+            <motion.div
+              variants={fadeUp}
+              className="mt-4 grid grid-cols-3 divide-x divide-stone-200 overflow-hidden rounded-2xl border border-stone-200 bg-white py-5"
             >
-              Explore my work
+              {stats.map((stat) => {
+                const StatIcon = stat.icon;
 
-              <ArrowUpRight
-                size={16}
-                className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-              />
-            </motion.a>
+                return (
+                  <div
+                    key={stat.label}
+                    className="flex flex-col items-center px-1.5 text-center sm:px-3"
+                  >
+                    <div
+                      className={`mb-3 flex h-9 w-9 items-center justify-center rounded-xl ${stat.iconBg} ${stat.accent}`}
+                    >
+                      <StatIcon size={17} strokeWidth={1.8} />
+                    </div>
+
+                    <p className="text-xl font-semibold tracking-tight sm:text-2xl">
+                      {stat.value}
+                    </p>
+
+                    <p className="mx-auto mt-1.5 max-w-24 text-[10px] leading-4 text-stone-500 sm:text-xs">
+                      {stat.label}
+                    </p>
+                  </div>
+                );
+              })}
+            </motion.div>
           </motion.div>
 
-          {/* =================================================
-              RIGHT SIDE
-          ================================================= */}
-
-          <div className="flex flex-col gap-4">
-
-            {highlights.map((item, index) => {
+          {/* Highlight cards */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+            className="flex flex-col gap-4"
+          >
+            {highlights.map((item) => {
               const Icon = item.icon;
 
               return (
-                <motion.div
-                  key={item.title}
-                  initial={{
-                    opacity: 0,
-                    y: 55,
-                  }}
-                  whileInView={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  viewport={{
-                    once: false,
-                    amount: 0.2,
-                  }}
-                  transition={{
-                    duration: 0.65,
-                    delay: index * 0.13,
-                    ease: "easeOut",
-                  }}
-                  whileHover={{
-                    y: -7,
-                  }}
-                  className="group relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0B1120]/90 p-6 backdrop-blur-xl sm:p-7"
+                <motion.article
+                  key={item.number}
+                  variants={fadeUp}
+                  whileHover={
+                    shouldReduceMotion
+                      ? undefined
+                      : { y: -4, transition: { duration: 0.2 } }
+                  }
+                  className={`group relative overflow-hidden rounded-2xl border ${item.border} ${item.cardBg} p-6 shadow-sm shadow-stone-900/[0.02] transition-shadow duration-300 hover:shadow-md hover:shadow-stone-900/[0.05] sm:p-7`}
                 >
-
-                  {/* Hover gradient */}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-500/[0.04] via-transparent to-blue-500/[0.03] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-                  {/* Corner glow */}
-                  <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-violet-500/0 blur-[70px] transition-all duration-500 group-hover:bg-violet-500/15" />
+                  {/* Subtle corner decoration */}
+                  <div
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute -right-8 -top-10 h-28 w-28 rounded-full ${item.iconBg} opacity-50 transition-transform duration-500 group-hover:scale-125`}
+                  />
 
                   <div className="relative">
-
-                    <div className="flex items-start justify-between gap-5">
-
-                      {/* Icon */}
-                      <motion.div
-                        whileHover={{
-                          rotate: 8,
-                          scale: 1.1,
-                        }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 300,
-                        }}
-                        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-violet-500/20 bg-violet-500/10 text-violet-400"
+                    <div className="flex items-start justify-between gap-4">
+                      <div
+                        className={`flex h-11 w-11 items-center justify-center rounded-xl ${item.iconBg} ${item.accent} transition-transform duration-300 group-hover:scale-105`}
                       >
-                        <Icon size={22} />
-                      </motion.div>
+                        <Icon size={21} strokeWidth={1.7} />
+                      </div>
 
+                      <span
+                        className={`font-mono text-xs ${item.accent} opacity-70`}
+                      >
+                        {item.number}
+                      </span>
                     </div>
 
-                    <h3 className="mt-6 text-xl font-semibold tracking-tight text-white">
+                    <h3 className="mt-5 text-xl font-semibold tracking-tight">
                       {item.title}
                     </h3>
 
-                    <p className="mt-3 max-w-lg text-sm leading-7 text-zinc-500">
+                    <p className="mt-3 text-sm leading-7 text-stone-600 sm:text-base">
                       {item.description}
                     </p>
 
-                    {/* Bottom line */}
-                    <div className="mt-7 h-px w-full bg-white/5">
+                    {/* Animated category-colored line */}
+                    <div className="mt-6 h-[2px] w-full overflow-hidden rounded-full bg-white/80">
                       <motion.div
-                        initial={{
-                          width: "0%",
-                        }}
-                        whileInView={{
-                          width: "28%",
-                        }}
-                        viewport={{
-                          once: false,
-                          amount: 0.25,
-                        }}
+                        initial={{ scaleX: 0 }}
+                        whileInView={{ scaleX: 1 }}
+                        viewport={{ once: true }}
                         transition={{
-                          duration: 0.8,
-                          delay: 0.2 + index * 0.1,
+                          duration: shouldReduceMotion ? 0 : 0.7,
+                          delay: shouldReduceMotion ? 0 : 0.15,
+                          ease: "easeOut",
                         }}
-                        className="h-full bg-gradient-to-r from-violet-500 to-blue-500"
+                        className={`h-full origin-left ${item.line}`}
                       />
                     </div>
                   </div>
-                </motion.div>
+                </motion.article>
               );
             })}
-
-           
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

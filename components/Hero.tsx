@@ -1,462 +1,322 @@
+
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import {
-  ArrowDown,
+  ArrowDownRight,
   ArrowUpRight,
-  Code2,
-  GitBranch,
   Mail,
-  MapPin,
+  Code2,
   Sparkles,
 } from "lucide-react";
 
-const techStack = ["Java", "React", "Next.js", "Node.js", "Python"];
+const techStack = [
+  { name: "Java", detail: "Programming", color: "bg-orange-50 text-orange-700" },
+  { name: "React", detail: "Frontend", color: "bg-sky-50 text-sky-700" },
+  { name: "Next.js", detail: "Web framework", color: "bg-stone-100 text-stone-800" },
+  { name: "Node.js", detail: "Backend", color: "bg-emerald-50 text-emerald-700" },
+  { name: "Python", detail: "Programming & ML", color: "bg-amber-50 text-amber-700" },
+];
 
 export default function Hero() {
+  const shouldReduceMotion = useReducedMotion();
+
+  const fadeUp = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 22 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: shouldReduceMotion ? 0 : 0.65,
+        ease: "easeOut" as const,
+      },
+    },
+  };
+
+  const stagger = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.12,
+      },
+    },
+  };
+
   return (
     <section
       id="home"
-      className="relative min-h-screen overflow-hidden px-6 pt-24"
+      className="relative  overflow-hidden bg-[#faf9f6] px-5 text-[#252525] sm:px-8"
     >
-      {/* =========================================================
-          BACKGROUND
-      ========================================================== */}
+      
+{/* Animated purple circle */}
+<motion.div
+  className="pointer-events-none absolute hidden md:block left-10 bottom-0 z-10 h-72 w-72 rounded-full bg-emerald-200 blur sm:h-96 sm:w-96"
+  animate={{
+    x: [0, -70, 20, 0],
+    y: [0, 60, 120, 0],
+    scale: [1, 1.2, 0.9, 1],
+  }}
+  transition={{
+    duration: 12,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+/>
 
-      {/* Main purple glow */}
-      <motion.div
-        animate={{
-          scale: [1, 1.15, 1],
-          opacity: [0.12, 0.22, 0.12],
-        }}
-        transition={{
-          duration: 7,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute left-[45%] top-[20%] -z-10 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-violet-600 blur-[160px]"
+
+
+{/* Animated mint-green circle */}
+<motion.div
+  className="pointer-events-none absolute -bottom-20 -left-10 z-10 h-72 w-72 rounded-full bg-emerald-200 blur hidden md:block sm:h-96 sm:w-96"
+  animate={{
+    x: [0, 80, 140, 0],
+    y: [0, -60, -20, 0],
+    scale: [1, 0.9, 1.15, 1],
+  }}
+  transition={{
+    duration: 16,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+/>
+
+
+      
+      {/* Soft background details */}
+      <div 
+        aria-hidden="true"
+        className="pointer-events-none  absolute -right-32 top-28 h-96 w-96 rounded-full bg-emerald-100/40 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-32 bottom-0 h-72 w-72 rounded-full bg-amber-100/40 blur-3xl"
       />
 
-      {/* Blue glow */}
-      <motion.div
-        animate={{
-          x: [0, 50, 0],
-          y: [0, -30, 0],
-          opacity: [0.05, 0.12, 0.05],
-        }}
-        transition={{
-          duration: 9,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute right-[5%] top-[15%] -z-10 h-72 w-72 rounded-full bg-blue-600 blur-[150px]"
-      />
+      <div className="relative mx-auto max-w-6xl mt-8">
+        {/* Main hero */}
+        <div className="grid min-h-[calc(100vh-88px)] items-center gap-14 py-16 lg:grid-cols-[1.25fr_0.75fr] lg:gap-16 lg:py-20">
+          {/* Introduction */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            animate="visible"
+            className="relative z-10"
+          >
+           
 
-      {/* Grid */}
-      <div className="pointer-events-none absolute inset-0 -z-20 bg-[linear-gradient(to_right,#ffffff06_1px,transparent_1px),linear-gradient(to_bottom,#ffffff06_1px,transparent_1px)] bg-[size:70px_70px] [mask-image:radial-gradient(ellipse_at_center,black_15%,transparent_75%)]" />
-
-      {/* =========================================================
-          MAIN CONTAINER
-      ========================================================== */}
-
-      <div className="mx-auto flex min-h-[calc(100vh-6rem)] max-w-7xl items-center">
-        <div className="grid w-full items-center gap-16 lg:grid-cols-[1.15fr_0.85fr]">
-
-          {/* =====================================================
-              LEFT — MAIN INTRO
-          ====================================================== */}
-
-          <div className="relative z-10">
-
-          
-            {/* Hello */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="mb-5 flex items-center gap-3"
-            >
-              <span className="h-px w-10 bg-violet-500" />
-
-              <p className="text-sm font-medium uppercase tracking-[0.3em] text-violet-400">
-                Hello, I'm
-              </p>
-            </motion.div>
-
-            {/* Name */}
             <motion.h1
-              initial={{ opacity: 0, y: 35 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.15,
-                ease: "easeOut",
-              }}
-              className="text-6xl font-bold leading-[0.95] tracking-[-0.04em] sm:text-7xl md:text-8xl"
+              variants={fadeUp}
+              className="max-w-3xl text-5xl font-semibold leading-[1.08] tracking-[-0.045em] sm:text-6xl md:text-7xl lg:text-[76px]"
             >
-              Sachin
+              Hi, I&apos;m Sachin.
               <br />
-
-              <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Bisht.
+              <span className="text-stone-400">
+                I build for the{" "}
+              </span>
+              <span className="relative inline-block text-emerald-700">
+                web.
+                <span
+                  aria-hidden="true"
+                  className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-emerald-200"
+                />
               </span>
             </motion.h1>
 
-            {/* Role */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.35 }}
-              className="mt-7 flex flex-wrap items-center gap-3"
-            >
-              <span className="text-xl font-semibold text-zinc-200 sm:text-2xl">
-                MCA Graduate
-              </span>
-
-              <span className="text-violet-500">×</span>
-
-              <span className="text-xl font-semibold text-zinc-400 sm:text-2xl">
-                Full Stack Developer
-              </span>
-            </motion.div>
-
-            {/* Description */}
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.45 }}
-              className="mt-7 max-w-2xl text-base leading-8 text-zinc-500 sm:text-lg"
+              variants={fadeUp}
+              className="mt-7 max-w-xl text-base leading-8 text-stone-600 sm:text-lg"
             >
-              I build modern web applications and AI-powered solutions,
-              combining clean interfaces, practical functionality, and
-              thoughtful user experiences.
+              I&apos;m a developer who enjoys building web applications,
+              solving problems, and understanding how things work behind
+              the scenes. I mainly work with React, Node.js, and modern
+              web technologies.
             </motion.p>
 
             {/* Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.55 }}
-              className="mt-9 flex flex-wrap gap-4"
+              variants={fadeUp}
+              className="mt-9 flex flex-wrap items-center gap-3"
             >
-              {/* Projects */}
               <motion.a
                 href="#projects"
-                whileHover={{
-                  scale: 1.04,
-                  y: -3,
-                }}
-                whileTap={{
-                  scale: 0.97,
-                }}
-                className="group flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-black shadow-[0_0_30px_rgba(255,255,255,0.08)] transition-all hover:shadow-[0_0_40px_rgba(139,92,246,0.2)]"
+                whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+                whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+                className="group inline-flex items-center gap-2.5 rounded-xl bg-[#252525] px-5 py-3.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-emerald-800"
               >
-                Explore My Work
-
+                View my projects
                 <ArrowUpRight
-                  size={17}
-                  className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                  size={16}
+                  className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 />
               </motion.a>
 
-              {/* Resume */}
               <motion.a
                 href="/resume.pdf"
                 target="_blank"
-                whileHover={{
-                  scale: 1.04,
-                  y: -3,
-                }}
-                whileTap={{
-                  scale: 0.97,
-                }}
-                className="rounded-full border border-white/10 bg-white/[0.03] px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:border-violet-500/40 hover:bg-violet-500/10"
+                rel="noopener noreferrer"
+                whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+                className="inline-flex items-center gap-2 rounded-xl border border-stone-300 bg-white/70 px-5 py-3.5 text-sm font-medium transition-colors hover:border-emerald-300 hover:bg-emerald-50/60"
               >
-                View Resume
+                View resume
+                <ArrowDownRight size={16} />
               </motion.a>
             </motion.div>
 
-            {/* Socials */}
+            {/* Social links */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{
-                duration: 0.7,
-                delay: 0.75,
-              }}
-              className="mt-10 flex items-center gap-3"
+              variants={fadeUp}
+              className="mt-9 flex items-center gap-4"
             >
-              {/* GitHub */}
-              <motion.a
+              <span className="text-xs font-medium uppercase tracking-[0.16em] text-stone-400">
+                Find me on
+              </span>
+
+              <span className="h-px w-7 bg-stone-300" />
+
+              <a
                 href="https://github.com/sachinbisht913"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
-                whileHover={{
-                  y: -4,
-                  scale: 1.08,
-                }}
-                whileTap={{
-                  scale: 0.9,
-                }}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-500 transition-all duration-300 hover:border-violet-500/40 hover:bg-violet-500/10 hover:text-white"
+                className="rounded-lg p-2 text-stone-500 transition-all hover:bg-white hover:text-stone-950"
               >
-                <GitBranch size={19} />
-              </motion.a>
+                <svg
+                  viewBox="0 0 24 24"
+                  width="21"
+                  height="21"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.56.1.76-.24.76-.54v-2.1c-3.1.68-3.76-1.32-3.76-1.32-.5-1.3-1.24-1.65-1.24-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.72 1.16 1.72 1.16 1 .1.74 2.13 3.6 1.63.1-.72.4-1.21.72-1.49-2.48-.28-5.09-1.24-5.09-5.5 0-1.22.44-2.22 1.16-3-.12-.28-.5-1.42.11-2.96 0 0 .95-.3 3.05 1.15a10.6 10.6 0 0 1 5.56 0c2.1-1.45 3.04-1.15 3.04-1.15.61 1.54.23 2.68.12 2.96.72.78 1.15 1.78 1.15 3 0 4.27-2.61 5.22-5.1 5.5.4.35.76 1.02.76 2.06v3.05c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z" />
+                </svg>
+              </a>
 
-              {/* LinkedIn */}
-              <motion.a
+              <a
                 href="https://www.linkedin.com/in/sachin-bisht913"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                whileHover={{
-                  y: -4,
-                  scale: 1.08,
-                }}
-                whileTap={{
-                  scale: 0.9,
-                }}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-500 transition-all duration-300 hover:border-violet-500/40 hover:bg-violet-500/10 hover:text-white"
+                className="rounded-lg p-2 text-stone-500 transition-all hover:bg-white hover:text-[#0a66c2]"
               >
                 <svg
-                  width="18"
-                  height="18"
                   viewBox="0 0 24 24"
+                  width="21"
+                  height="21"
                   fill="currentColor"
+                  aria-hidden="true"
                 >
                   <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.62 0 4.29 2.38 4.29 5.48v6.26ZM5.32 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM3.54 20.45h3.56V9H3.54v11.45ZM22.22 0H1.78C.8 0 .02.78.02 1.74v20.52c0 .96.78 1.74 1.76 1.74h20.44c.98 0 1.76-.78 1.76-1.74V1.74C23.98.78 23.2 0 22.22 0Z" />
                 </svg>
-              </motion.a>
+              </a>
 
-              {/* Email */}
-              <motion.a
+              <a
                 href="#contact"
-                aria-label="Email"
-                whileHover={{
-                  y: -4,
-                  scale: 1.08,
-                }}
-                whileTap={{
-                  scale: 0.9,
-                }}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-500 transition-all duration-300 hover:border-violet-500/40 hover:bg-violet-500/10 hover:text-white"
+                aria-label="Contact"
+                className="rounded-lg p-2 text-stone-500 transition-all hover:bg-white hover:text-emerald-800"
               >
-                <Mail size={19} />
-              </motion.a>
-            </motion.div>
-          </div>
-
-          {/* =====================================================
-              RIGHT — DEVELOPER CARD
-          ====================================================== */}
-
-          <motion.div
-            initial={{
-              opacity: 0,
-              x: 60,
-              scale: 0.95,
-            }}
-            animate={{
-              opacity: 1,
-              x: 0,
-              scale: 1,
-            }}
-            transition={{
-              duration: 0.9,
-              delay: 0.35,
-              ease: "easeOut",
-            }}
-            className="relative hidden lg:block"
-          >
-            {/* Outer glow */}
-            <div className="absolute -inset-10 -z-10 rounded-full bg-violet-600/10 blur-[100px]" />
-
-            {/* Floating card */}
-            <motion.div
-              animate={{
-                y: [0, -10, 0],
-              }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.035] p-7 shadow-2xl shadow-black/40 backdrop-blur-xl"
-            >
-              {/* Card gradient */}
-              <div className="pointer-events-none absolute right-0 top-0 h-64 w-64 rounded-full bg-violet-600/10 blur-[90px]" />
-
-              {/* Top bar */}
-              <div className="relative flex items-center justify-between border-b border-white/10 pb-5">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-violet-500/20 bg-violet-500/10 text-violet-400">
-                    <Code2 size={20} />
-                  </div>
-
-                  <div>
-                    <p className="text-sm font-semibold text-white">
-                      Developer
-                    </p>
-
-                    <p className="text-xs text-zinc-600">
-                      Software & AI
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3 py-1.5">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-
-                  <span className="text-[11px] text-emerald-400">
-                    Open to work
-                  </span>
-                </div>
-              </div>
-
-              {/* Code window */}
-              <div className="relative mt-6 overflow-hidden rounded-2xl border border-white/10 bg-black/40">
-                {/* Window header */}
-                <div className="flex items-center gap-1.5 border-b border-white/10 px-4 py-3">
-                  <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/70" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-green-400/70" />
-
-                  <span className="ml-3 text-[10px] text-zinc-600">
-                    portfolio.tsx
-                  </span>
-                </div>
-
-                {/* Code */}
-                <div className="p-5 font-mono text-xs leading-7">
-                  <p>
-                    <span className="text-violet-400">const</span>{" "}
-                    <span className="text-blue-300">developer</span>{" "}
-                    = {"{"}
-                  </p>
-
-                  <p className="pl-5">
-                    <span className="text-zinc-500">name:</span>{" "}
-                    <span className="text-emerald-300">
-                      "Sachin Bisht"
-                    </span>
-                    ,
-                  </p>
-
-                  <p className="pl-5">
-                    <span className="text-zinc-500">role:</span>{" "}
-                    <span className="text-emerald-300">
-                      "Full Stack Developer"
-                    </span>
-                    ,
-                  </p>
-
-                  <p className="pl-5">
-                    <span className="text-zinc-500">focus:</span>{" "}
-                    <span className="text-emerald-300">
-                      "AI + Web"
-                    </span>
-                    ,
-                  </p>
-
-                  <p className="pl-5">
-                    <span className="text-zinc-500">location:</span>{" "}
-                    <span className="text-emerald-300">
-                      "India"
-                    </span>
-                  </p>
-
-                  <p>{"}"}</p>
-
-                  <motion.span
-                    animate={{ opacity: [1, 0, 1] }}
-                    transition={{
-                      duration: 1,
-                      repeat: Infinity,
-                    }}
-                    className="ml-1 inline-block h-4 w-1 bg-violet-400 align-middle"
-                  />
-                </div>
-              </div>
-
-              {/* Tech stack */}
-              <div className="relative mt-6">
-                <div className="mb-3 flex items-center justify-between">
-                  <p className="text-xs font-medium uppercase tracking-widest text-zinc-600">
-                    Tech Stack
-                  </p>
-
-                  
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  {techStack.map((tech, index) => (
-                    <motion.span
-                      key={tech}
-                      initial={{
-                        opacity: 0,
-                        scale: 0.8,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        scale: 1,
-                      }}
-                      transition={{
-                        delay: 0.9 + index * 0.1,
-                      }}
-                      whileHover={{
-                        y: -3,
-                      }}
-                      className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] text-zinc-400 transition-colors hover:border-violet-500/30 hover:text-violet-300"
-                    >
-                      {tech}
-                    </motion.span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Location */}
-              <div className="relative mt-6 flex items-center gap-2 border-t border-white/10 pt-5 text-xs text-zinc-600">
-                <MapPin size={13} className="text-violet-400" />
-                Based in India
-              </div>
+                <Mail size={21} />
+              </a>
             </motion.div>
           </motion.div>
+
+          {/* Technology panel */}
+          <motion.aside
+            initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{
+              duration: shouldReduceMotion ? 0 : 0.7,
+              delay: shouldReduceMotion ? 0 : 0.2,
+              ease: "easeOut",
+            }}
+            className="relative mx-auto w-full max-w-md lg:ml-auto"
+          >
+            <div className="relative overflow-hidden rounded-[28px] border border-stone-200 bg-white/80 p-6 shadow-xl shadow-stone-900/[0.04] sm:p-8">
+              {/* Panel header */}
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
+                    My toolkit
+                  </p>
+                  <h2 className="mt-2 text-xl font-semibold tracking-tight">
+                    Technologies I use
+                  </h2>
+                </div>
+                
+
+              
+              </div>
+
+              {/* Decorative accent */}
+              <div className="my-6 h-px bg-stone-200" />
+
+              <div className="space-y-3">
+                {techStack.map((tech, index) => (
+                  <motion.div
+                    key={tech.name}
+                    initial={{
+                      opacity: 0,
+                      x: shouldReduceMotion ? 0 : 12,
+                    }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{
+                      duration: shouldReduceMotion ? 0 : 0.4,
+                      delay: shouldReduceMotion ? 0 : 0.35 + index * 0.09,
+                    }}
+                    className="group flex items-center gap-4 rounded-2xl border border-stone-100 bg-[#faf9f6] p-3.5 transition-all duration-200 hover:border-emerald-200 hover:bg-emerald-50/50"
+                  >
+                    <div
+                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-xs font-bold ${tech.color}`}
+                    >
+                      {tech.name === "Java"
+                        ? "Jv"
+                        : tech.name === "React"
+                          ? "Re"
+                          : tech.name === "Next.js"
+                            ? "Nx"
+                            : tech.name === "Node.js"
+                              ? "Nd"
+                              : "Py"}
+                    </div>
+
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold text-stone-800">
+                        {tech.name}
+                      </p>
+                      <p className="mt-0.5 text-xs text-stone-500">
+                        {tech.detail}
+                      </p>
+                    </div>
+
+                    <ArrowUpRight
+                      size={16}
+                      className="text-stone-300 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-emerald-700"
+                    />
+                  </motion.div>
+                ))}
+              </div>
+
+            
+            </div>
+
+           
+          </motion.aside>
+        </div>
+
+        {/* Bottom separator */}
+        <div className="flex items-center gap-4 border-t border-stone-200 py-5">
+          <span className="text-xs font-medium tracking-wide text-stone-400">
+            DESIGN · DEVELOP · LEARN
+          </span>
+          <div className="h-px flex-1 bg-stone-200" />
+          <a
+            href="#about"
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-500 transition-colors hover:text-emerald-800"
+          >
+            A little about me
+            <ArrowDownRight size={14} />
+          </a>
         </div>
       </div>
-
-      {/* =========================================================
-          SCROLL INDICATOR
-      ========================================================== */}
-
-      <motion.a
-        href="#about"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{
-          delay: 1.5,
-          duration: 0.8,
-        }}
-        className="absolute bottom-7 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-zinc-600 transition-colors hover:text-zinc-300"
-        aria-label="Scroll to about section"
-      >
-        <span className="text-[9px] uppercase tracking-[0.35em]">
-          Scroll
-        </span>
-
-        <motion.div
-          animate={{
-            y: [0, 6, 0],
-          }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <ArrowDown size={16} />
-        </motion.div>
-      </motion.a>
     </section>
   );
 }

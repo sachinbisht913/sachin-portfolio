@@ -1,6 +1,7 @@
+
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import {
   Code2,
   Database,
@@ -11,476 +12,276 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 
-const skillGroups = [
+const iconBase =
+  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons";
+
+type Skill = {
+  name: string;
+  icon?: string;
+  custom?: string;
+};
+
+type SkillGroup = {
+  title: string;
+  description: string;
+  icon: typeof Code2;
+  accent: string;
+  iconBg: string;
+  cardBg: string;
+  border: string;
+  skills: Skill[];
+};
+
+const skillGroups: SkillGroup[] = [
   {
     title: "Languages",
-    subtitle: "Core programming",
-    icon: Terminal,
-    gradient: "from-orange-500/10 via-transparent to-yellow-500/5",
-    accent: "bg-orange-400",
+    description: "Programming fundamentals",
+    icon: Code2,
+    accent: "text-amber-700",
+    iconBg: "bg-amber-100",
+    cardBg: "bg-amber-50/80",
+    border: "border-amber-200",
     skills: [
-      {
-        name: "Java",
-        icon: "/icons/java.svg",
-      },
+      { name: "Java", icon: `${iconBase}/java/java-original.svg` },
       {
         name: "JavaScript",
-        icon: "/icons/javascript.svg",
+        icon: `${iconBase}/javascript/javascript-original.svg`,
       },
-      {
-        name: "Python",
-        icon: "/icons/python.svg",
-      },
-      {
-        name: "SQL",
-        icon: "/icons/sql.svg",
-      },
+      { name: "Python", icon: `${iconBase}/python/python-original.svg` },
+      { name: "SQL", custom: "SQL" },
     ],
   },
-
   {
     title: "Frontend",
-    subtitle: "Interfaces & experiences",
-    icon: Code2,
-    gradient: "from-blue-500/10 via-transparent to-cyan-500/5",
-    accent: "bg-blue-400",
+    description: "Building user interfaces",
+    icon: Terminal,
+    accent: "text-sky-700",
+    iconBg: "bg-sky-100",
+    cardBg: "bg-sky-50/80",
+    border: "border-sky-200",
     skills: [
-      {
-        name: "HTML",
-        icon: "/icons/html.svg",
-      },
-      {
-        name: "CSS",
-        icon: "/icons/css.svg",
-      },
-      {
-        name: "React",
-        icon: "/icons/react.svg",
-      },
-      {
-        name: "Next.js",
-        icon: "/icons/nextjs.svg",
-      },
+      { name: "HTML", icon: `${iconBase}/html5/html5-original.svg` },
+      { name: "CSS", icon: `${iconBase}/css3/css3-original.svg` },
+      { name: "React", icon: `${iconBase}/react/react-original.svg` },
+      { name: "Next.js", icon: `${iconBase}/nextjs/nextjs-original.svg` },
       {
         name: "Tailwind CSS",
-        icon: "/icons/tailwindcss.svg",
+        icon: `${iconBase}/tailwindcss/tailwindcss-original.svg`,
       },
     ],
   },
-
   {
     title: "Backend",
-    subtitle: "Server-side development",
+    description: "APIs and server-side development",
     icon: Server,
-    gradient: "from-green-500/10 via-transparent to-emerald-500/5",
-    accent: "bg-emerald-400",
+    accent: "text-emerald-700",
+    iconBg: "bg-emerald-100",
+    cardBg: "bg-emerald-50/80",
+    border: "border-emerald-200",
     skills: [
-      {
-        name: "Node.js",
-        icon: "/icons/nodejs.svg",
-      },
-      {
-        name: "Express.js",
-        icon: "/icons/express.svg",
-      },
-      {
-        name: "Flask",
-        icon: "/icons/flask.svg",
-      },
+      { name: "Node.js", icon: `${iconBase}/nodejs/nodejs-original.svg` },
+      { name: "Express.js", icon: `${iconBase}/express/express-original.svg` },
+      { name: "Flask", icon: `${iconBase}/flask/flask-original.svg` },
     ],
   },
-
   {
     title: "Database",
-    subtitle: "Data & storage",
+    description: "Data storage and management",
     icon: Database,
-    gradient: "from-cyan-500/10 via-transparent to-blue-500/5",
-    accent: "bg-cyan-400",
+    accent: "text-blue-700",
+    iconBg: "bg-blue-100",
+    cardBg: "bg-blue-50/80",
+    border: "border-blue-200",
     skills: [
-      {
-        name: "MongoDB",
-        icon: "/icons/mongodb.svg",
-      },
-      {
-        name: "MySQL",
-        icon: "/icons/mysql.svg",
-      },
+      { name: "MongoDB", icon: `${iconBase}/mongodb/mongodb-original.svg` },
+      { name: "MySQL", icon: `${iconBase}/mysql/mysql-original.svg` },
     ],
   },
-
   {
-    title: "AI / Machine Learning",
-    subtitle: "Intelligent systems",
+    title: "AI & Machine Learning",
+    description: "Data analysis and machine learning",
     icon: BrainCircuit,
-    gradient: "from-violet-500/10 via-transparent to-fuchsia-500/5",
-    accent: "bg-violet-400",
+    accent: "text-violet-700",
+    iconBg: "bg-violet-100",
+    cardBg: "bg-violet-50/80",
+    border: "border-violet-200",
     skills: [
-      {
-        name: "Python",
-        icon: "/icons/python.svg",
-      },
-      {
-        name: "Pandas",
-        icon: "/icons/pandas.svg",
-      },
-      {
-        name: "NumPy",
-        icon: "/icons/numpy.svg",
-      },
+      { name: "Pandas", icon: `${iconBase}/pandas/pandas-original.svg` },
+      { name: "NumPy", icon: `${iconBase}/numpy/numpy-original.svg` },
       {
         name: "Scikit-learn",
-        icon: "/icons/scikitlearn.svg",
+        icon: `${iconBase}/scikitlearn/scikitlearn-original.svg`,
       },
+      { name: "Python", icon: `${iconBase}/python/python-original.svg` },
     ],
   },
-
   {
     title: "Tools",
-    subtitle: "Development workflow",
+    description: "Development workflow",
     icon: Wrench,
-    gradient: "from-pink-500/10 via-transparent to-purple-500/5",
-    accent: "bg-pink-400",
+    accent: "text-orange-700",
+    iconBg: "bg-orange-100",
+    cardBg: "bg-orange-50/80",
+    border: "border-orange-200",
     skills: [
-      {
-        name: "Git",
-        icon: "/icons/git.svg",
-      },
-      {
-        name: "GitHub",
-        icon: "/icons/github.svg",
-      },
-      {
-        name: "VS Code",
-        icon: "/icons/vscode.svg",
-      },
-      {
-        name: "Postman",
-        icon: "/icons/postman.svg",
-      },
+      { name: "Git", icon: `${iconBase}/git/git-original.svg` },
+      { name: "GitHub", icon: `${iconBase}/github/github-original.svg` },
+      { name: "VS Code", icon: `${iconBase}/vscode/vscode-original.svg` },
+      { name: "Postman", icon: `${iconBase}/postman/postman-original.svg` },
     ],
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.12,
-    },
-  },
-};
+function SkillLogo({ skill }: { skill: Skill }) {
+  if (skill.custom) {
+    return (
+      <span
+        className="flex h-9 min-w-9 items-center justify-center rounded-lg border border-slate-200 bg-white px-1.5 text-xs font-bold tracking-tight text-slate-700 shadow-sm"
+        aria-label={skill.name}
+        title={skill.name}
+      >
+        {skill.custom}
+      </span>
+    );
+  }
 
-const cardVariants = {
-  hidden: {
-    opacity: 0,
-    y: 50,
-    scale: 0.96,
-  },
-
-  show: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-
-    transition: {
-      duration: 0.65,
-      ease: "easeOut" as const,
-    },
-  },
-};
+  return (
+    <img
+      src={skill.icon}
+      alt={`${skill.name} logo`}
+      title={skill.name}
+      loading="lazy"
+      className="h-9 w-9 object-contain transition-transform duration-300 group-hover/skill:scale-110"
+    />
+  );
+}
 
 export default function Skills() {
+  const shouldReduceMotion = useReducedMotion();
+
+  const reveal = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 22 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
     <section
       id="skills"
-      className="relative overflow-hidden border-t border-white/10 px-6 py-28 sm:py-32"
+      className="relative overflow-hidden bg-[#faf9f6] px-5 py-20 sm:px-8 sm:py-24"
     >
-      {/* =====================================================
-          BACKGROUND
-      ====================================================== */}
-
-      <motion.div
-        animate={{
-          scale: [1, 1.15, 1],
-          opacity: [0.03, 0.08, 0.03],
-        }}
-        transition={{
-          duration: 9,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-600 blur-[160px]"
+      {/* Subtle decorative background */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-24 top-16 h-72 w-72 rounded-full bg-sky-100/40 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-24 bottom-12 h-64 w-64 rounded-full bg-amber-100/40 blur-3xl"
       />
 
-      {/* Subtle grid */}
-
-      <div className="pointer-events-none absolute inset-0 -z-20 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:80px_80px] [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)]" />
-
-      <div className="mx-auto max-w-7xl">
-
-        {/* =====================================================
-            HEADING
-        ====================================================== */}
-
+      <div className="relative mx-auto max-w-6xl">
+        {/* Section heading */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 40,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: false,
-            amount: 0.25,
-          }}
-          transition={{
-            duration: 0.7,
-            ease: "easeOut",
-          }}
-          className="mb-16"
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.55, ease: "easeOut" }}
+          className="mb-12 max-w-2xl"
         >
-          <div className="mb-5 flex items-center gap-3">
-            <span className="h-px w-10 bg-violet-500" />
-
-            <p className="text-xs font-medium uppercase tracking-[0.35em] text-violet-400">
-              Skills
-            </p>
-
-            
+          <div className="mb-4 flex items-center gap-3">
+            <span className="h-px w-9 bg-stone-400" />
+            <span className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">
+              Skills & Technologies
+            </span>
           </div>
 
-          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          <h2 className="text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl md:text-5xl">
+            Tools I use to{" "}
+            <span className="text-emerald-700">build things.</span>
+          </h2>
 
-            <div>
-              <h2 className="text-4xl font-bold tracking-[-0.03em] text-white sm:text-5xl lg:text-6xl">
-                Technologies I{" "}   work with.
-                {/* <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
-                
-                </span> */}
-              </h2>
-
-              <p className="mt-6 max-w-2xl text-base leading-8 text-zinc-500 sm:text-lg">
-                A collection of technologies and tools I use to build
-                modern web applications, backend systems, and
-                AI-powered solutions.
-              </p>
-            </div>
-
-            {/* Right label */}
-
-            <div className="hidden items-center gap-3 lg:flex">
-              <span className="h-px w-12 bg-white/10" />
-
-              <span className="text-xs text-zinc-700">
-                TECH STACK
-              </span>
-            </div>
-          </div>
+          <p className="mt-4 max-w-xl text-base leading-7 text-stone-600 sm:text-lg">
+            The languages, frameworks, and tools I use while building projects
+            and learning software development.
+          </p>
         </motion.div>
 
-        {/* =====================================================
-            SKILLS GRID
-        ====================================================== */}
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{
-            once: false,
-            amount: 0.08,
-          }}
-          className="grid grid-cols-1 gap-5 md:grid-cols-2"
-        >
+        {/* Skills grid */}
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {skillGroups.map((group, index) => {
-            const Icon = group.icon;
-
-            const isTools = group.title === "Tools";
+            const CategoryIcon = group.icon;
 
             return (
-              <motion.div
+              <motion.article
                 key={group.title}
-                variants={cardVariants}
-                whileHover={{
-                  y: -8,
-                }}
+                variants={reveal}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.15 }}
                 transition={{
-                  duration: 0.25,
+                  duration: 0.5,
+                  delay: shouldReduceMotion ? 0 : index * 0.07,
+                  ease: "easeOut",
                 }}
-                className={`group relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0B1120]/80 p-6 backdrop-blur-xl transition-all duration-500 hover:border-white/20 sm:p-7 ${
-                  isTools ? "md:col-span-2" : ""
-                }`}
+                whileHover={
+                  shouldReduceMotion
+                    ? undefined
+                    : { y: -5, transition: { duration: 0.2 } }
+                }
+                className={`group relative flex min-h-[225px] flex-col overflow-hidden rounded-2xl border ${group.border} ${group.cardBg} p-5 shadow-sm shadow-stone-900/[0.025] transition-shadow duration-300 hover:shadow-lg hover:shadow-stone-900/[0.06] sm:p-6`}
               >
-
-                {/* =================================================
-                    CARD BACKGROUND GRADIENT
-                ================================================== */}
-
+                {/* Decorative corner */}
                 <div
-                  className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${group.gradient} opacity-60 transition-opacity duration-500 group-hover:opacity-100`}
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute -right-8 -top-10 h-28 w-28 rounded-full ${group.iconBg} opacity-50 transition-transform duration-500 group-hover:scale-125`}
                 />
 
-                {/* =================================================
-                    CARD GLOW
-                ================================================== */}
-
-                <div className="pointer-events-none absolute -right-24 -top-24 h-48 w-48 rounded-full bg-violet-500/0 blur-[80px] transition-all duration-700 group-hover:bg-violet-500/15" />
-
-                <div className="relative">
-
-                  {/* =================================================
-                      CATEGORY HEADER
-                  ================================================== */}
-
-                  <div className="flex items-center justify-between">
-
-                    <div className="flex items-center gap-4">
-
-                      <motion.div
-                        whileHover={{
-                          rotate: 8,
-                          scale: 1.1,
-                        }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 300,
-                        }}
-                        className="flex h-12 w-12 items-center justify-center rounded-2xl border border-violet-500/20 bg-violet-500/10 text-violet-400"
-                      >
-                        <Icon size={21} />
-                      </motion.div>
-
-                      <div>
-                        <h3 className="text-lg font-semibold text-white">
-                          {group.title}
-                        </h3>
-
-                        <p className="mt-1 text-xs text-zinc-600">
-                          {group.subtitle}
-                        </p>
-                      </div>
-
+                <div className="relative flex items-start justify-between gap-3">
+                  <div className="flex items-start gap-3">
+                    <div
+                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${group.iconBg} ${group.accent}`}
+                    >
+                      <CategoryIcon size={21} strokeWidth={1.8} />
                     </div>
 
-                    {/* Arrow */}
-
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                        x: -5,
-                      }}
-                      whileHover={{
-                        opacity: 1,
-                        x: 0,
-                      }}
-                      className="text-zinc-600"
-                    >
-                      <ArrowUpRight size={18} />
-                    </motion.div>
-
+                    <div className="pt-0.5">
+                      <h3 className="text-base font-semibold tracking-tight text-stone-900">
+                        {group.title}
+                      </h3>
+                      <p className="mt-1 text-sm leading-5 text-stone-600">
+                        {group.description}
+                      </p>
+                    </div>
                   </div>
 
-                  {/* =================================================
-                      TECHNOLOGIES
-                  ================================================== */}
-
-                  <div className="mt-8 flex flex-wrap gap-3">
-
-                    {group.skills.map((skill, skillIndex) => (
-                      <motion.div
-                        key={skill.name}
-                        initial={{
-                          opacity: 0,
-                          scale: 0.8,
-                          y: 15,
-                        }}
-                        whileInView={{
-                          opacity: 1,
-                          scale: 1,
-                          y: 0,
-                        }}
-                        viewport={{
-                          once: false,
-                          amount: 0.2,
-                        }}
-                        transition={{
-                          duration: 0.35,
-                          delay: skillIndex * 0.06,
-                          ease: "easeOut",
-                        }}
-                        whileHover={{
-                          scale: 1.06,
-                          y: -5,
-                        }}
-                        className="group/skill flex cursor-default items-center gap-3 rounded-2xl border border-white/10 bg-black/30 px-3 py-3 transition-all duration-300 hover:border-violet-500/40 hover:bg-violet-500/[0.08]"
-                      >
-
-                        {/* Technology icon */}
-
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/5 bg-white/[0.04] p-1.5 transition-all duration-300 group-hover/skill:border-white/10 group-hover/skill:bg-white/[0.08]">
-                          {skill.icon ? (
-                            <img
-                              src={skill.icon}
-                              alt={`${skill.name} icon`}
-                              className="h-7 w-7 object-contain transition-transform duration-300 group-hover/skill:scale-110"
-                            />
-                          ) : (
-                            <span className="text-[10px] font-bold text-violet-400">
-                              {skill.name
-                                .slice(0, 2)
-                                .toUpperCase()}
-                            </span>
-                          )}
-                        </div>
-
-                        {/* Technology name */}
-
-                        <span className="whitespace-nowrap text-xs font-medium text-zinc-400 transition-colors duration-300 group-hover/skill:text-white">
-                          {skill.name}
-                        </span>
-
-                      </motion.div>
-                    ))}
-
-                  </div>
-
-                  {/* =================================================
-                      BOTTOM ACCENT
-                  ================================================== */}
-
-                  <div className="mt-8 h-px w-full overflow-hidden bg-white/5">
-
-                    <motion.div
-                      initial={{
-                        width: "0%",
-                      }}
-                      whileInView={{
-                        width: "30%",
-                      }}
-                      viewport={{
-                        once: false,
-                        amount: 0.2,
-                      }}
-                      transition={{
-                        delay: 0.3,
-                        duration: 0.8,
-                        ease: "easeOut",
-                      }}
-                      className="h-full bg-gradient-to-r from-violet-500 to-blue-500"
-                    />
-
-                  </div>
-
+                  <ArrowUpRight
+                    size={18}
+                    className={`mt-1 shrink-0 ${group.accent} opacity-60 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100`}
+                  />
                 </div>
-              </motion.div>
+
+                {/* Real technology logos */}
+                <div className="relative mt-auto flex flex-wrap items-center gap-x-4 gap-y-4 pt-7">
+                  {group.skills.map((skill) => (
+                    <div
+                      key={skill.name}
+                      className="group/skill flex min-h-10 items-center justify-center"
+                    >
+                      <SkillLogo skill={skill} />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Bottom accent */}
+                <div
+                  aria-hidden="true"
+                  className={`absolute bottom-0 left-5 right-5 h-[2px] origin-left scale-x-0 rounded-full ${group.iconBg} transition-transform duration-300 group-hover:scale-x-100`}
+                />
+              </motion.article>
             );
           })}
-        </motion.div>
-
-       
-
+        </div>
       </div>
     </section>
   );

@@ -1,6 +1,11 @@
+
 "use client";
 
-import { motion, useScroll, useTransform } from "motion/react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+} from "motion/react";
 import { useRef, useState } from "react";
 import ProjectGallery from "./ProjectGallery";
 import {
@@ -29,12 +34,11 @@ const projects = [
     demo: "https://ai-interview-platform-8jme.onrender.com/login",
     featured: true,
   },
-
   {
     title: "Network Intrusion Detection System",
     category: "Machine Learning • Security",
     description:
-      "A machine-learning based intrusion detection system that detects and classifies network attacks using the NSL-KDD dataset.",
+      "A machine-learning-based intrusion detection system that detects and classifies network attacks using the NSL-KDD dataset.",
     tech: [
       "Python",
       "Flask",
@@ -47,7 +51,6 @@ const projects = [
     github: "#",
     demo: "#",
   },
-
   {
     title: "Path Finder Visualizer",
     category: "Algorithms • Visualization",
@@ -64,7 +67,6 @@ const projects = [
     github: "#",
     demo: "#",
   },
-
   {
     title: "Learning Management System",
     category: "Full Stack • Web",
@@ -88,6 +90,7 @@ export default function Projects() {
   return <ProjectGallery />;
 }
 
+
 export function LegacyProjects() {
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -100,27 +103,25 @@ export function LegacyProjects() {
     <section
       id="projects"
       ref={sectionRef}
-      className="relative h-[420vh] border-t border-slate-200 bg-white"
+      className="relative h-[420vh] border-t border-stone-200 bg-[#BAB9B5]"
     >
       <div className="sticky top-0 flex h-screen items-center overflow-hidden px-4 py-20 sm:px-6">
-
-        {/* Background glow */}
+        {/* Subtle animated background glow */}
         <motion.div
           animate={{
             scale: [1, 1.15, 1],
-            opacity: [0.04, 0.09, 0.04],
+            opacity: [0.025, 0.055, 0.025],
           }}
           transition={{
             duration: 8,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[550px] w-[550px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-600 blur-[160px]"
+          className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[550px] w-[550px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-200 blur-[160px]"
         />
 
         <div className="mx-auto flex w-full max-w-6xl flex-col">
-
-          {/* Heading */}
+          {/* Section heading */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -129,19 +130,19 @@ export function LegacyProjects() {
             className="mb-7 shrink-0"
           >
             <div className="mb-3 flex items-center gap-3">
-              <span className="h-px w-8 bg-violet-500" />
+              <span className="h-px w-8 bg-stone-400" />
 
-              <p className="text-sm font-medium uppercase tracking-[0.25em] text-violet-400">
+              <p className="text-sm font-medium uppercase tracking-[0.25em] text-stone-500">
                 Projects
               </p>
             </div>
 
-            <h2 className="text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
-              Things I've built.
+            <h2 className="text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl">
+              Things I&apos;ve built.
             </h2>
           </motion.div>
 
-          {/* Project Stack */}
+          {/* Stacked project cards */}
           <div className="relative h-[58vh] min-h-[390px] max-h-[620px] w-full">
             {projects.map((project, index) => (
               <StackCard
@@ -156,7 +157,7 @@ export function LegacyProjects() {
 
           {/* Scroll indicator */}
           <div className="mt-6 flex items-center gap-4">
-            <div className="h-px flex-1 bg-slate-200" />
+            <div className="h-px flex-1 bg-stone-200" />
 
             <motion.p
               animate={{
@@ -166,12 +167,12 @@ export function LegacyProjects() {
                 duration: 2,
                 repeat: Infinity,
               }}
-              className="whitespace-nowrap text-[10px] uppercase tracking-[0.3em] text-zinc-500"
+              className="whitespace-nowrap text-[10px] uppercase tracking-[0.3em] text-stone-500"
             >
               Scroll to explore
             </motion.p>
 
-            <div className="h-px flex-1 bg-slate-200" />
+            <div className="h-px flex-1 bg-stone-200" />
           </div>
         </div>
       </div>
@@ -197,12 +198,11 @@ function StackCard({
   const end = (index + 1) / total;
 
   /*
-   * STACK ANIMATION
-   *
-   * Project 1 stays visible.
-   * Project 2 is behind it.
-   * When scrolling, Project 2 moves upward.
-   * The same happens for Projects 3 and 4.
+   * Original stack animation:
+   * - Cards start stacked behind each other.
+   * - Scrolling moves each card upward.
+   * - Cards scale slightly as they move.
+   * - Previous cards fade away.
    */
 
   const y = useTransform(
@@ -218,7 +218,7 @@ function StackCard({
       "0%",
       "-8%",
       "-120%",
-    ],
+    ]
   );
 
   const scale = useTransform(
@@ -232,7 +232,7 @@ function StackCard({
       index === 0 ? 1 : 1 - index * 0.025,
       1,
       0.975,
-    ],
+    ]
   );
 
   const opacity = useTransform(
@@ -243,12 +243,7 @@ function StackCard({
       end,
       Math.min(1, end + 0.1),
     ],
-    [
-      1,
-      1,
-      1,
-      0,
-    ],
+    [1, 1, 1, 0]
   );
 
   const showOverlay = isHovering || isTapped;
@@ -264,26 +259,22 @@ function StackCard({
       className="absolute inset-0 origin-bottom"
     >
       <div
-        className="group relative h-full w-full cursor-pointer overflow-hidden rounded-[28px] border border-white/10 bg-zinc-950 shadow-2xl shadow-black/50"
+        className="group relative h-full w-full cursor-pointer overflow-hidden rounded-[28px] border border-stone-200 bg-white shadow-xl shadow-stone-900/10"
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         onClick={() => setIsTapped((value) => !value)}
       >
-
-        {/* ================================================
-            FULL CARD IMAGE
-        ================================================= */}
-
+        {/* Background image */}
         <img
           src={project.image}
           alt={project.title}
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
         />
 
-        {/* Base gradient */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/10" />
+        {/* Image readability gradient */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-stone-950/75 via-stone-950/15 to-stone-950/10" />
 
-        {/* Extra darkening when overlay opens */}
+        {/* Animated overlay darkening */}
         <motion.div
           animate={{
             opacity: showOverlay ? 0.22 : 0,
@@ -291,34 +282,12 @@ function StackCard({
           transition={{
             duration: 0.4,
           }}
-          className="pointer-events-none absolute inset-0 bg-black"
+          className="pointer-events-none absolute inset-0 bg-stone-950"
         />
 
-        {/* Featured badge */}
-        {project.featured && (
-          <motion.div
-            animate={{
-              y: showOverlay ? -8 : 0,
-              opacity: showOverlay ? 0 : 1,
-            }}
-            transition={{
-              duration: 0.3,
-            }}
-            className="absolute left-5 top-5 z-20 flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-xl sm:left-7 sm:top-7"
-          >
-            <Sparkles
-              size={13}
-              className="text-violet-400"
-            />
+      
 
-            Featured Project
-          </motion.div>
-        )}
-
-        {/* ================================================
-            DEFAULT TITLE
-        ================================================= */}
-
+        {/* Default card title */}
         <motion.div
           animate={{
             y: showOverlay ? -25 : 0,
@@ -330,7 +299,7 @@ function StackCard({
           }}
           className="pointer-events-none absolute bottom-7 left-6 right-6 z-20 sm:bottom-9 sm:left-9"
         >
-          <p className="mb-2 text-xs font-medium uppercase tracking-[0.22em] text-violet-300">
+          <p className="mb-2 text-xs font-medium uppercase tracking-[0.22em] text-amber-200">
             {project.category}
           </p>
 
@@ -338,15 +307,12 @@ function StackCard({
             {project.title}
           </h3>
 
-          <p className="mt-2 text-xs text-white/50 sm:text-sm">
+          <p className="mt-2 text-xs text-white/75 sm:text-sm">
             Hover to explore
           </p>
         </motion.div>
 
-        {/* ================================================
-            BOTTOM → TOP OVERLAY
-        ================================================= */}
-
+        {/* Details overlay — slides up from the bottom */}
         <motion.div
           initial={false}
           animate={{
@@ -356,15 +322,14 @@ function StackCard({
             duration: 0.6,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="absolute inset-x-0 bottom-0 z-30 flex h-[72%] flex-col justify-end bg-gradient-to-t from-black via-black/90 to-black/35 p-6 sm:h-[66%] sm:p-9 md:h-[60%] md:p-10"
+          className="absolute inset-x-0 bottom-0 z-30 flex h-[72%] flex-col justify-end bg-gradient-to-t from-stone-950 via-stone-950/90 to-stone-950/35 p-6 sm:h-[66%] sm:p-9 md:h-[60%] md:p-10"
         >
           <div
             className="w-full"
             onClick={(event) => event.stopPropagation()}
           >
-
             {/* Category */}
-            <p className="text-xs font-medium uppercase tracking-[0.25em] text-violet-400">
+            <p className="text-xs font-medium uppercase tracking-[0.25em] text-amber-300">
               {project.category}
             </p>
 
@@ -374,7 +339,7 @@ function StackCard({
             </h3>
 
             {/* Description */}
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-zinc-300 sm:text-base sm:leading-7">
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-stone-200 sm:text-base sm:leading-7">
               {project.description}
             </p>
 
@@ -387,23 +352,22 @@ function StackCard({
                     y: -2,
                     scale: 1.04,
                   }}
-                  className="rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-[11px] text-zinc-200 backdrop-blur-md transition-colors duration-300 hover:border-violet-400/50 hover:bg-violet-500/15 hover:text-white sm:px-3 sm:py-1.5 sm:text-xs"
+                  className="rounded-full border border-white/20 bg-white/10 px-2.5 py-1 text-[11px] text-stone-100 backdrop-blur-md transition-colors duration-300 hover:border-amber-200/60 hover:bg-amber-100/15 hover:text-white sm:px-3 sm:py-1.5 sm:text-xs"
                 >
                   {tech}
                 </motion.span>
               ))}
             </div>
 
-            {/* Buttons */}
+            {/* Project buttons */}
             <div className="mt-5 flex flex-wrap gap-3">
-
               {/* GitHub */}
               <a
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(event) => event.stopPropagation()}
-                className="group/button flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-md transition-all duration-300 hover:border-white/40 hover:bg-white/20"
+                className="group/button flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-md transition-all duration-300 hover:border-white/60 hover:bg-white/20"
               >
                 GitHub
 
@@ -413,13 +377,13 @@ function StackCard({
                 />
               </a>
 
-              {/* Live Demo */}
+              {/* Live demo */}
               <a
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(event) => event.stopPropagation()}
-                className="group/button flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-black transition-all duration-300 hover:bg-zinc-200"
+                className="group/button flex items-center gap-2 rounded-xl bg-[#faf9f6] px-4 py-2.5 text-sm font-semibold text-stone-900 transition-all duration-300 hover:bg-amber-100"
               >
                 Live Demo
 
@@ -432,10 +396,7 @@ function StackCard({
           </div>
         </motion.div>
 
-        {/* ================================================
-            MOBILE HINT
-        ================================================= */}
-
+        {/* Mobile interaction hint */}
         <motion.div
           animate={{
             opacity: showOverlay ? 0 : 1,
@@ -443,7 +404,7 @@ function StackCard({
           transition={{
             duration: 0.25,
           }}
-          className="absolute bottom-5 right-5 z-20 rounded-full border border-white/10 bg-black/40 px-3 py-1.5 text-[10px] uppercase tracking-wider text-white/60 backdrop-blur-md sm:hidden"
+          className="absolute bottom-5 right-5 z-20 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-[10px] uppercase tracking-wider text-white/90 backdrop-blur-md sm:hidden"
         >
           Tap to explore
         </motion.div>
